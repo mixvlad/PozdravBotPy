@@ -1,11 +1,13 @@
 steps:
-  - name: gcr.io/cloud-builders/gcloud
-    entrypoint: 'bash'
-    args: [ '-c', 'gcloud secrets versions access latest --secret=pozdrav-bot-env > setenv.sh && chmod +x setenv.sh' ]
-  - name: gcr.io/cloud-builders/docker
-    entrypoint: 'bash'
-    args: [ '-c', 'setenv.sh']
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/$PROJECT_ID/pozdrav-bot', '.']
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/pozdrav-bot']
+  - name: gcr.io/cloud-builders/gcloud
+    entrypoint: 'bash'
+    args: [ '-c', 'gcloud secrets versions access latest --secret=pozdrav-bot-env > pozdrav-bot-env.txt' ]
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args: ['-c', 'gcloud run deploy pozdravbot --image gcr.io/$PROJECT_ID/pozdrav-bot --region us-east1 --platform managed --allow-unauthenticated --set-env-vars $(cat pozdrav-bot-env.txt)']
+images:
+- gcr.io/$PROJECT_ID/pozdrav-bot
