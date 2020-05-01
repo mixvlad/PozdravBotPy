@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  pozdrav-bot:
+    image: pozdrav-bot
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+    - "443:${PORT-8443}"
+    environment:
+      - TOKEN={YOUR TOKEN}
+      - PROXY_URL={PROXY URL OR DELETE THIS ROW IF DONT NEED}
+      - ENDPOINT={ENDPOINT FOR BOT AVAILABLE FROM OUTSIDE WITH SSL FOR LOCAL DEV USE NGROK}
+      - PORT=${PORT-8443}
