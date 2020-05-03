@@ -24,7 +24,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, MessageHandler, Filters
 
 starttime = time.time()
-with open('src/data.json') as json_file:
+with open('data.json') as json_file:
     data = json.load(json_file)
 
 keyboard = []
