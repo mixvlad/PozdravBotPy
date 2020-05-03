@@ -10,4 +10,4 @@ COPY --from=builder /install /usr/local/lib/python3.8/site-packages
 COPY src /app
 WORKDIR /app
 
-CMD [ "python", "main.py" ]
+CMD [ "python", "-u", "main.py" ]
